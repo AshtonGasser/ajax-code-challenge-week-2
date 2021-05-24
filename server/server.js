@@ -6,6 +6,12 @@ const PORT = 5000;
 // use bodyParser.urlencoded throughout the app with this:
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(express.static('server/public'));
+
+app.listen(PORT, () => {
+  console.log('server running on: ', PORT);
+}); // end spin up server
+
 let jokes = [
   {
     whoseJoke: "Danny",
@@ -34,9 +40,27 @@ let jokes = [
   }
 ];
 
-// serve back static files
-app.use(express.static('server/public'));
 
-app.listen(PORT, () => {
-  console.log('server running on: ', PORT);
-}); // end spin up server
+// ⬇ GET & POST Routes below:
+
+app.get("/jokes", (req, res) => {
+  console.log("YAY Got to /jokes");
+
+  res.send(jokes);
+});
+
+
+
+app.post("/jokes", (req, res) => {
+  console.log("got to '/jokes' POST, req.body: ", req.body);
+  // const whoseJoke = (req.body.whoseJoke)
+  // const jokeQuestion = (req.body.jokeQuestion)
+  // const punchLine = (req.body.punchLine)
+
+  //let newJokes = (req.body.jokes)
+
+  jokes.push (req.body)
+  res.sendStatus(201);
+})
+// serve back static files
+
